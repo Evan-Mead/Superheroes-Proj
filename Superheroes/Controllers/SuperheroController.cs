@@ -22,8 +22,8 @@ namespace Superheroes.Controllers
         // GET: Superhero
         public ActionResult Index()
         {
-            var superheros = _context.Superheroes.ToList();
-            return View(superheros);
+            var superheroes = _context.Superheroes.ToList();
+            return View(superheroes);
         }
 
         // GET: Superhero/Details/5
@@ -87,7 +87,10 @@ namespace Superheroes.Controllers
         {
             // TODO: Add delete logic here
             {
-                return View();
+                var superheroes = _context.Superheroes.Where(s => s.Id == id).SingleOrDefault();
+                _context.Superheroes.Remove(superheroes);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
             }
         }
     }

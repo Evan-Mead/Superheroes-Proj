@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Superheroes.Data;
 using Superheroes.Models;
 
@@ -63,7 +64,13 @@ namespace Superheroes.Controllers
         {
             // TODO: Add update logic here
             {
-                return View();
+                if (ModelState.IsValid)
+                {
+                    _context.Entry(superhero).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(superhero);
             }
         }
 
